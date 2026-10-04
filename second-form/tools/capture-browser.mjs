@@ -36,7 +36,8 @@ for (;;) {
   const st = await tab.evaluate(() => (window.__status ? window.__status() : null)).catch(() => null);
   const s = ((Date.now() - t0) / 1000).toFixed(0);
   console.error(`${s}s ${JSON.stringify(st)}`);
-  if (st && st.progress >= 0.999 && st.spp > 96) break;
+  // the page stops drawing once its surface field and image have converged (idle)
+  if (st && st.progress >= 0.999 && st.stable >= 256) break;
   if ((Date.now() - t0) / 1000 > limit) { console.error('timed out; saving the current state'); break; }
 }
 const data = await tab.evaluate(() => window.__snapshot());

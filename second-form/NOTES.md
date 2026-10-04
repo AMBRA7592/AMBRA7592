@@ -116,8 +116,9 @@ lands, and the surface shows only the smooth fall-off of the source.
 tracer. The browser compiles it as GLSL ES 3.00; the film renderer compiles the same file
 as C++ through `native/glsl.h`. Photon indices, scrambling, sample patterns and the display
 transform are identical. Rendered at 640×360, the converged browser image of the final
-arrangement differs from the film renderer's by 0.8/255 on average (95th percentile 3/255)
-(`out/checks/browser-vs-film.png`).
+arrangement differs from the film renderer's by 0.6/255 on average (95th percentile 2/255)
+(`out/checks/browser-vs-film.png`; the browser image is captured with
+`tools/capture-browser.mjs` once the page has converged and stopped drawing).
 
 Differences that remain:
 

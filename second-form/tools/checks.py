@@ -41,14 +41,16 @@ def box(a, r):
 
 
 def temporal(frames_dir):
-    names = sorted(n for n in os.listdir(frames_dir) if n.endswith('.ppm'))
-    sections = [('opening', 0, 95), ('withdrawal', 96, 191), ('travel', 192, 417)]
+    # only the sections where the camera is still: there every change comes from the light
+    # (during the withdrawal the image moves as a whole, which this measure cannot separate)
+    sections = [('opening', 0, 95), ('travel', 192, 417)]
+    frame = lambda i: os.path.join(frames_dir, f'f{i:04d}.ppm')
     for title, a, b in sections:
         rows = []
         for i in range(a, b, 12):
-            if i + 1 >= len(names):
-                break
-            d = ppm16f(os.path.join(frames_dir, names[i + 1])) - ppm16f(os.path.join(frames_dir, names[i]))
+            if not (os.path.exists(frame(i)) and os.path.exists(frame(i + 1))):
+                continue
+            d = ppm16f(frame(i + 1)) - ppm16f(frame(i))
             fine = d - box(d, 4)
             rows.append((np.abs(d).mean(), np.sqrt((fine ** 2).mean())))
         if rows:

@@ -86,7 +86,7 @@ function start() {
   if (testArgs) {
     R.maxBatches = 64;
     R.maxVis = 64;
-    window.__status = () => ({ mode: state.mode, refine: R.refine, vis: R.fields.wide?.visSamples, spp: R.frameSamples, progress: R.progress() });
+    window.__status = () => ({ mode: state.mode, refine: R.refine, vis: R.fields.wide?.visSamples, spp: R.frameSamples, progress: R.progress(), stable: state.stable || 0 });
     window.__snapshot = () => canvas.toDataURL('image/png');
     if (testArgs[1] === 'film') { startFilm(); state.freezeT = Number(testArgs[2] || 0); }
     else { enterCompose(true); if (testArgs[2]) state.light = { ...presetLight(testArgs[2]) }; }
