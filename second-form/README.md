@@ -13,11 +13,11 @@ Not affiliated with or endorsed by Baccarat.
 | Path | What it is |
 | --- | --- |
 | `dist/the-second-form.html` | The self-contained experience. Open it in a desktop browser with WebGL2. It plays the 24-second sequence live, then lets you compose with the light. |
-| `out/film/the-second-form-1080p.mp4` | The 24-second film, 1920×1080, 24 fps, H.264 8-bit (a 10-bit master sits beside it). |
+| `out/film/the-second-form-1080p.mp4` | The 24-second film, 1920×1080, 24 fps, H.264 8-bit, silent (a 10-bit master and the held frame as `poster.png` sit beside it). |
 | `out/stills/still-arc.png` | The held arrangement (the decisive frame). |
 | `out/stills/still-meridian.png`, `still-halo.png` | The two other arrangements, same glass, same camera. |
 | `out/stills/product-view.png` | Neutral product view used to check the reconstruction. |
-| `out/checks/` | Verification renders: glass removed, convergence, a fixed-camera light transition, browser versus film renderer, and an opaque view of the geometry. |
+| `out/checks/` | Verification renders: glass removed, convergence, a fixed-camera light transition (sheet and clip), browser versus film renderer, and an opaque view of the geometry. |
 | `NOTES.md` | Reference, method, assumptions and known limitations. |
 | `reference/measurements.md` | What was measured from the photograph and the published data. |
 

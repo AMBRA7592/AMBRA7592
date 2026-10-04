@@ -106,8 +106,9 @@ at the fixed exposure): a glint covering most of a pixel still reads as white, s
 fade. This is a deliberate bias in the image of the glass only; the light on the surface
 is computed separately and is not affected.
 
-Removing the glass removes all photon light: with the glass gone the surface shows only
-the smooth fall-off of the source (`out/checks/removal-*.png`).
+Removing the glass removes all focused light (`out/checks/removal.png`): the same 60
+million photons, from the same emission window, are traced with the glass removed; none
+lands, and the surface shows only the smooth fall-off of the source.
 
 ### One optical system, two renderers
 
