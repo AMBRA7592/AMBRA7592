@@ -75,13 +75,14 @@ def main():
     out = lambda n: os.path.join(root, n)
     # glass removal: same light, camera and exposure
     if os.path.exists(out('removal-with-glass.ppm')):
-        a = label(ppm16(out('removal-with-glass.ppm')), 'with the glass')
-        b = label(ppm16(out('removal-without-glass.ppm')), 'glass removed: the same photons traced, none land')
-        sheet = Image.new('RGB', (a.width, a.height * 2))
-        sheet.paste(a, (0, 0)); sheet.paste(b, (0, a.height))
-        sheet.save(out('removal.png'))
+        a = ppm16(out('removal-with-glass.ppm'))
+        b = ppm16(out('removal-without-glass.ppm'))
         diff = np.abs(np.asarray(a, float) - np.asarray(b, float)).mean()
         print('removal: mean difference', round(diff, 2))
+        sheet = Image.new('RGB', (a.width, a.height * 2))
+        sheet.paste(label(a, 'with the glass'), (0, 0))
+        sheet.paste(label(b, 'glass removed: the same photons traced, none land'), (0, a.height))
+        sheet.save(out('removal.png'))
     # convergence: crops of the drop and arc at increasing photon counts
     names = [n for n in ['conv-6M', 'conv-24M', 'conv-96M', 'conv-384M'] if os.path.exists(out(n + '.ppm'))]
     if names:
@@ -128,7 +129,14 @@ def main():
         sheet.paste(label(amp, 'difference x8'), (0, a.height * 2))
         sheet.save(out('browser-vs-film.png'))
     if os.path.exists(out('geometry-clay.ppm')):
-        ppm16(out('geometry-clay.ppm')).save(out('geometry-clay.png'))
+        im = ppm16(out('geometry-clay.ppm'))
+        d = ImageDraw.Draw(im)
+        legend = ['The crystal\'s surfaces rendered opaque (geometry check).',
+                  'blue-grey: flat cuts (bowl facets, stem, knop, foot)',
+                  'beige: uncut round blank above the arches; pink: half-round rim']
+        for i, line in enumerate(legend):
+            d.text((24, im.height - 70 + 18 * i), line, fill=(225, 225, 225))
+        im.save(out('geometry-clay.png'))
 
 
 if __name__ == '__main__':
