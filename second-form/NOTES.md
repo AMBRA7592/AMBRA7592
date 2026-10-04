@@ -106,10 +106,6 @@ at the fixed exposure): a glint covering most of a pixel still reads as white, s
 fade. This is a deliberate bias in the image of the glass only; the light on the surface
 is computed separately and is not affected.
 
-Removing the glass removes all focused light (`out/checks/removal.png`): the same 60
-million photons, from the same emission window, are traced with the glass removed; none
-lands, and the surface shows only the smooth fall-off of the source.
-
 ### One optical system, two renderers
 
 `src/optics.glsl` holds the geometry, material, light, room, photon tracer and camera
@@ -157,6 +153,33 @@ From one fixed camera, three arrangements of the same glass:
   bowl's outer surface) sweep across the lit surface, and the space above stays dark.
 - **Halo** (128°, 64°): a high light from behind gathers a compact swirl of arcs and a
   bright cusp beside the foot.
+
+## Verification
+
+Everything below is in `out/checks/` and is reproduced by the commands in the README.
+
+- **Glass removed** (`removal.png`): the same 60 million photons, from the same emission
+  window, are traced with the glass removed. None lands; the surface keeps only the
+  source's smooth fall-off. All focused light comes from the crystal.
+- **Convergence** (`convergence.png`): the final arrangement at 6, 24, 96 and 384 million
+  photons. Against 384 million the mean difference is 1.20, 0.49 and 0.26 /255, roughly
+  halving with each fourfold increase as photon noise should; the drop, its spectral
+  edges and the arcs stay where they are.
+- **Coherent change** (`transition.png`, `transition.mp4`): camera fixed, the source moves
+  Halo → Arc → Meridian in 48 steps; the second form changes continuously, with no jumps.
+- **Two renderers** (`browser-vs-film.png`): 0.6/255 mean difference, 2/255 at the 95th
+  percentile.
+- **Temporal stability** (`python3 tools/checks.py … --film`): with the camera still, the
+  fine-grained frame-to-frame change, which is what would read as shimmer, is 1.0/255 RMS
+  in the opening and in the light's travel (at most 1.6/255 between any two measured
+  frames): about one step of an 8-bit image, part of it the caustics' own movement.
+- **Inspection**: rim, facets, stem, foot contact and shadow were examined at 3× in the
+  stills. The rim reads as a continuous band; arches and facet edges stay sharp; the foot
+  meets the surface along a dark contact line; the shadow's edge softens with distance
+  from the foot, as a 1.2 mm source should make it. The one artefact found, isolated
+  glint specks in the bowl, led to the glint cap described above.
+- **Geometry** (`geometry-clay.png`, and `../stills/product-view.png`): the surfaces
+  rendered opaque, and the glass in a neutral studio surround.
 
 ## Known limitations
 
