@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """Assemble the verification images in out/checks from rendered PPM frames.
 
-usage: python3 tools/checks.py <checksDir> [browserPng]
+usage: python3 tools/checks.py <checksDir> [browserPng] [--film <framesDir>]
+
+With --film, also measures frame-to-frame change in the rendered film: the change is
+split into a smooth part (the light or camera moving) and a fine-grained residual, which
+is what would read as shimmer.
 """
 import os
+import shutil
+import subprocess
 import sys
 
 import numpy as np
@@ -19,6 +25,38 @@ def ppm16(path):
     return Image.fromarray((a / 257.0).round().astype(np.uint8))
 
 
+def ppm16f(path):
+    with open(path, 'rb') as f:
+        f.readline()
+        w, h = map(int, f.readline().split())
+        f.readline()
+        return np.frombuffer(f.read(), dtype='>u2').reshape(h, w, 3).astype(np.float32) / 257.0
+
+
+def box(a, r):
+    """Mean over a (2r+1)^2 window, edges clamped."""
+    p = np.pad(a, ((r + 1, r), (r + 1, r), (0, 0)), mode='edge').cumsum(0).cumsum(1)
+    k = 2 * r + 1
+    return (p[k:, k:] - p[:-k, k:] - p[k:, :-k] + p[:-k, :-k]) / (k * k)
+
+
+def temporal(frames_dir):
+    names = sorted(n for n in os.listdir(frames_dir) if n.endswith('.ppm'))
+    sections = [('opening', 0, 95), ('withdrawal', 96, 191), ('travel', 192, 417)]
+    for title, a, b in sections:
+        rows = []
+        for i in range(a, b, 12):
+            if i + 1 >= len(names):
+                break
+            d = ppm16f(os.path.join(frames_dir, names[i + 1])) - ppm16f(os.path.join(frames_dir, names[i]))
+            fine = d - box(d, 4)
+            rows.append((np.abs(d).mean(), np.sqrt((fine ** 2).mean())))
+        if rows:
+            r = np.array(rows)
+            print(f'temporal {title}: mean frame-to-frame change {r[:, 0].mean():.2f}/255, '
+                  f'fine-grained residual {r[:, 1].mean():.2f}/255 RMS (max {r[:, 1].max():.2f})')
+
+
 def label(im, text):
     d = ImageDraw.Draw(im)
     d.rectangle([0, 0, 8 + 7 * len(text), 20], fill=(0, 0, 0))
@@ -27,6 +65,12 @@ def label(im, text):
 
 
 def main():
+    argv = sys.argv[1:]
+    if '--film' in argv:
+        i = argv.index('--film')
+        temporal(argv[i + 1])
+        del argv[i:i + 2]
+    sys.argv[1:] = argv
     root = sys.argv[1]
     out = lambda n: os.path.join(root, n)
     # glass removal: same light, camera and exposure
@@ -65,6 +109,11 @@ def main():
         for i, t in enumerate(tiles):
             sheet.paste(t, ((i % 4) * 480, (i // 4) * 270))
         sheet.save(out('transition.png'))
+        if shutil.which('ffmpeg'):
+            subprocess.run(['ffmpeg', '-v', 'error', '-y', '-framerate', '12', '-i', out('transition-%03d.ppm'),
+                            '-vf', 'scale=out_color_matrix=bt709:out_range=tv', '-c:v', 'libx264', '-crf', '16',
+                            '-pix_fmt', 'yuv420p', '-color_primaries', 'bt709', '-color_trc', 'bt709',
+                            '-colorspace', 'bt709', '-movflags', '+faststart', out('transition.mp4')], check=True)
     # browser against film renderer
     if len(sys.argv) > 2 and os.path.exists(out('film-renderer-640.ppm')):
         a = Image.open(sys.argv[2]).convert('RGB')

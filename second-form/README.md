@@ -70,12 +70,19 @@ node tools/stills.mjs out/checks removal && ./native/render out/checks/removal-w
 node tools/stills.mjs out/checks convergence && for f in out/checks/conv-*.cfg; do ./native/render $f; done
 node tools/stills.mjs out/checks transition && ./native/render out/checks/transition.cfg
 node tools/stills.mjs out/checks clay && ./native/render out/checks/clay.cfg
-python3 tools/checks.py out/checks
+node tools/stills.mjs out/checks compare && ./native/render out/checks/compare.cfg
+
+# the browser's converged image at the same size (needs Playwright; software WebGL is slow)
+node tools/capture-browser.mjs out/checks/browser-640.png arc
+
+python3 tools/checks.py out/checks out/checks/browser-640.png --film build/frames
 ```
 
 Frames are 16-bit PPM (and PFM for HDR when requested); `python3 tools/png.py *.ppm`
-writes 8-bit PNGs. The render is deterministic: the same job file reproduces the same
-frames. `python3 tools/checks.py out/checks` assembles the verification sheets.
+writes 8-bit PNGs. The render is deterministic for a given build: the same job file
+reproduces the same frames. `python3 tools/checks.py` assembles the verification sheets
+and the transition clip, prints the comparison figures, and with `--film` measures
+frame-to-frame change in the rendered film.
 
 Two diagnostic job options exist for inspection only: `clay 1` shades the crystal's
 surfaces opaque (geometry check), and `audit N` traces N photons and reports where their
