@@ -1,6 +1,7 @@
-native/render
-native/render_new
-native/render_prof
+# native build outputs (only the sources are tracked)
+native/*
+!native/*.cpp
+!native/*.h
 build/
 *.ppm
 *.pfm
