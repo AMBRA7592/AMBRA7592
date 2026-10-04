@@ -392,10 +392,15 @@ static void photonPass(const Job &J) {
   gCausticF = Map2D();
   if (J.has("cmap2")) gCausticF.setup(J.get("cmap2", 0), J.get("cmap2", 1), J.get("cmap2", 2), J.get("cmap2", 3), J.get("cmap2", 4));
   long N = (long)J.get("photons", 0, 1e6);
-  if (uGlass.w < 0.5f || N <= 0) {
-    fprintf(stderr, "  photons: skipped\n");
+  if (N <= 0) {
+    fprintf(stderr, "  photons: none\n");
     return;
   }
+  // With the glass removed the same photons are still emitted and traced: the
+  // window and its occupancy are found with the glass in place, so the removal
+  // check traces exactly the photons that form the caustics when it is there.
+  bool removed = uGlass.w < 0.5f;
+  if (removed) uGlass.w = 1.0f;
   float K = (float)J.get("photons", 1, 400), hmin = (float)J.get("photons", 2, 0.1),
         hmax = (float)J.get("photons", 3, 2.0);
   // emission window: plane through the crystal's centre, normal toward the light,
@@ -448,6 +453,7 @@ static void photonPass(const Job &J) {
     }
   long nOcc = 0;
   for (auto c : occD) nOcc += c;
+  if (removed) uGlass.w = 0.0f;
 
   std::vector<std::vector<Landing>> perThread(gThreads);
   std::atomic<long> nTouched(0);
@@ -485,8 +491,8 @@ static void photonPass(const Job &J) {
   double tTrace = nowSec() - t0;
   float rhoRef = splatInto(J, gCaustic, perThread, K, hmin, hmax, -1.0f);
   if (gCausticF.valid()) splatInto(J, gCausticF, perThread, K, hmin, hmax, rhoRef);
-  fprintf(stderr, "  photons: %ld emitted (window %.0f%% occupied), %ld touched crystal, %zu landed in map, trace %.1fs, splat %.1fs\n", N,
-          100.0 * nOcc / (MW * MW), nTouched.load(), total, tTrace, nowSec() - t0 - tTrace);
+  fprintf(stderr, "  photons: %ld emitted (window %.0f%% occupied)%s, %ld touched crystal, %zu landed in map, trace %.1fs, splat %.1fs\n", N,
+          100.0 * nOcc / (MW * MW), removed ? ", glass removed" : "", nTouched.load(), total, tTrace, nowSec() - t0 - tTrace);
 }
 
 // ---------------------------------------------------------------------------

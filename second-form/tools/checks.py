@@ -59,7 +59,7 @@ def temporal(frames_dir):
 
 def label(im, text):
     d = ImageDraw.Draw(im)
-    d.rectangle([0, 0, 8 + 7 * len(text), 20], fill=(0, 0, 0))
+    d.rectangle([0, 0, 10 + 6 * len(text), 20], fill=(0, 0, 0))
     d.text((5, 4), text, fill=(235, 235, 235))
     return im
 
@@ -76,7 +76,7 @@ def main():
     # glass removal: same light, camera and exposure
     if os.path.exists(out('removal-with-glass.ppm')):
         a = label(ppm16(out('removal-with-glass.ppm')), 'with the glass')
-        b = label(ppm16(out('removal-without-glass.ppm')), 'glass removed')
+        b = label(ppm16(out('removal-without-glass.ppm')), 'glass removed: the same photons traced, none land')
         sheet = Image.new('RGB', (a.width, a.height * 2))
         sheet.paste(a, (0, 0)); sheet.paste(b, (0, a.height))
         sheet.save(out('removal.png'))

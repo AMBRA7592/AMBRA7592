@@ -31,7 +31,7 @@ Not affiliated with or endorsed by Baccarat.
 | `src/scene.js`, `src/film.js` | Materials, light, camera rigs, the three light positions and the 24-second timeline. |
 | `web/renderer.js`, `web/app.js`, `web/template.html` | The WebGL2 renderer and the experience. |
 | `native/render.cpp`, `native/glsl.h` | CPU renderer for the film and stills (compiles `src/optics.glsl` through a small GLSL compatibility header). |
-| `tools/` | Job writers for the film and stills, the HTML bundler and the encoder. |
+| `tools/` | Job writers for the film and stills, the HTML bundler, the encoder, and the scripts that assemble the verification sheets and capture the browser render. |
 
 ## Rebuild the experience
 
