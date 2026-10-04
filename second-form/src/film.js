@@ -17,8 +17,9 @@ export const PRESETS = [
 ];
 export const FINAL_PRESET = 'arc';
 
-// Bounded region the viewer may move the light through.
-export const LIGHT_BOUNDS = { az: [118, 182], el: [22, 70], distAt: (el) => 445 - (el - 22) * 1.35 };
+// Bounded region the viewer may move the light through (its distance follows its
+// height through the three arrangements; see distAt in web/app.js).
+export const LIGHT_BOUNDS = { az: [118, 182], el: [22, 70] };
 
 // Fixed camera for the hold and for the interactive companion.
 export const FINAL_CAMERA = { az: -95, el: 28, dist: 720, target: [112, -10, 22], fov: 28 };
