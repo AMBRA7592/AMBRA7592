@@ -1,0 +1,237 @@
+<title>Baccarat — The Second Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@400;500&display=swap">
+<style>
+/* Layout: a single dark viewing room. Title above the image, the image alone in
+   the middle, everything you can touch below it. Nothing is drawn over the image. */
+:root {
+  --room: #0b0c0e;        /* page, a blue-black like the unlit room */
+  --frame: #050506;       /* behind the canvas */
+  --crystal: #e6eaec;     /* primary text, cool white */
+  --mist: #8a9197;        /* secondary text */
+  --hair: rgba(230, 234, 236, 0.14);
+  --hair-strong: rgba(230, 234, 236, 0.32);
+  --fire-a: #a9bdf5;      /* the two ends of a dispersion fringe, used only as hairlines */
+  --fire-b: #f1d39c;
+  --display: "Bodoni Moda", "Didot", "Bodoni 72", "Bodoni MT", "Times New Roman", serif;
+  --text: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --step--1: 0.78rem;
+  --step-0: 0.92rem;
+  --step-1: 1.15rem;
+  --step-2: clamp(1.4rem, 1.05rem + 1.4vw, 2.1rem);
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  background: var(--room);
+  color: var(--crystal);
+  font: 400 var(--step-0)/1.55 var(--text);
+  margin: 0;
+}
+.room {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding-inline: clamp(16px, 3vw, 40px);
+  padding-block: clamp(18px, 3vw, 34px) 40px;
+  display: grid;
+  gap: 18px;
+}
+.titles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 24px;
+}
+h1 {
+  margin: 0;
+  font: 400 var(--step-2)/1.1 var(--display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+h1 .dash { letter-spacing: 0; margin-inline: 0.25em; color: var(--mist); }
+.object {
+  margin: 0;
+  color: var(--mist);
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+.frame {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--frame);
+  outline: 1px solid var(--hair);
+}
+canvas#view {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+body[data-mode="compose"] canvas#view { cursor: grab; }
+body[data-mode="compose"] canvas#view:active { cursor: grabbing; }
+.veil {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+  background: var(--frame);
+  color: var(--mist);
+}
+.veil p { max-width: 44ch; margin: 0; }
+.meters { position: relative; height: 1px; background: var(--hair); overflow: hidden; }
+.meters span {
+  position: absolute; inset: 0;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--fire-a), var(--crystal) 55%, var(--fire-b));
+  opacity: 0.75;
+}
+body[data-mode="compose"] #progress { opacity: 0; }
+body[data-mode="film"] #refine { opacity: 0; }
+
+.controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1fr);
+  gap: 22px 36px;
+  align-items: start;
+  transition: opacity 600ms ease;
+}
+body[data-mode="film"] .controls { opacity: 0.22; pointer-events: none; }
+.label {
+  margin: 0 0 10px;
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+.presets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.preset {
+  appearance: none;
+  text-align: left;
+  background: transparent;
+  color: var(--crystal);
+  border: 0;
+  border-top: 1px solid var(--hair-strong);
+  padding: 10px 2px 4px;
+  cursor: pointer;
+  font: inherit;
+  position: relative;
+}
+.preset b { display: block; font: 400 var(--step-1)/1.2 var(--display); letter-spacing: 0.04em; }
+.preset span { display: block; color: var(--mist); font-size: var(--step--1); }
+.preset[aria-pressed="true"]::before {
+  content: "";
+  position: absolute; left: 0; right: 0; top: -1px; height: 1px;
+  background: linear-gradient(90deg, var(--fire-a), var(--crystal), var(--fire-b));
+}
+.preset:hover b, .preset:focus-visible b { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.pad-wrap { display: grid; justify-items: start; }
+#pad { width: 270px; max-width: 100%; height: auto; display: block; touch-action: none; cursor: crosshair; border-radius: 2px; }
+#pad:focus-visible { outline: 1px solid var(--crystal); outline-offset: 3px; }
+.pad-field { fill: rgba(230, 234, 236, 0.035); stroke: var(--hair-strong); stroke-width: 1; }
+.pad-grid { stroke: var(--hair); stroke-width: 1; }
+.pad-mark { fill: none; stroke: var(--mist); stroke-width: 1; }
+.pad-text { fill: var(--mist); font: 400 10px var(--text); letter-spacing: 0.06em; }
+#pad-dot { fill: var(--crystal); }
+.pad-halo { fill: url(#glow); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: flex-end; align-items: center; padding-top: 22px; }
+.act {
+  appearance: none;
+  background: transparent;
+  color: var(--crystal);
+  border: 1px solid var(--hair-strong);
+  padding: 8px 14px;
+  font: 500 var(--step--1)/1 var(--text);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.act:hover { border-color: var(--crystal); }
+.act:focus-visible, .preset:focus-visible { outline: 1px solid var(--crystal); outline-offset: 3px; }
+.act[data-busy="true"] { color: var(--mist); }
+.colophon {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px 36px;
+  color: var(--mist);
+  font-size: var(--step--1);
+  border-top: 1px solid var(--hair);
+  padding-top: 14px;
+}
+.colophon p { margin: 0; max-width: 64ch; }
+#debug { font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--mist); }
+@media (max-width: 900px) {
+  .controls { grid-template-columns: 1fr; }
+  .actions { justify-content: flex-start; padding-top: 0; }
+  .colophon { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .presets { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .controls { transition: none; }
+}
+</style>
+
+<div class="room">
+  <header class="titles">
+    <h1>Baccarat<span class="dash">—</span>The Second Form</h1>
+    <p class="object">An independent study of the Harcourt 1841 glass · ref.&nbsp;1201103 · 13.6&nbsp;cm · 17&nbsp;cl</p>
+  </header>
+
+  <div class="frame" id="frame">
+    <canvas id="view" width="1280" height="720" aria-label="A clear Harcourt crystal glass stands on a pale surface. One small light moves around it; on the surface its light gathers into a second form of bright curves and shadow."></canvas>
+    <div class="veil" id="veil" hidden><p>Preparing the crystal.</p></div>
+  </div>
+  <div class="meters" aria-hidden="true"><span id="progress"></span><span id="refine"></span></div>
+
+  <section class="controls" id="controls" aria-label="Compose with the light" aria-hidden="true">
+    <div>
+      <p class="label">Light</p>
+      <div class="presets">
+        <button class="preset" type="button" id="p-meridian" data-preset="meridian" aria-pressed="false"><b>Meridian</b><span>low, from the left; a long throw</span></button>
+        <button class="preset" type="button" id="p-arc" data-preset="arc" aria-pressed="true"><b>Arc</b><span>mid-height; the held arrangement</span></button>
+        <button class="preset" type="button" id="p-halo" data-preset="halo" aria-pressed="false"><b>Halo</b><span>high, from behind; close to the foot</span></button>
+      </div>
+    </div>
+    <div class="pad-wrap">
+      <p class="label">Move the source</p>
+      <svg id="pad" viewBox="-16 -14 300 192" role="slider" tabindex="0" aria-label="Light position. Arrow keys move the source; drag to place it." aria-valuetext="Light mid-height, from behind and to the left">
+        <defs>
+          <radialGradient id="glow"><stop offset="0" stop-color="#e6eaec" stop-opacity="0.45"/><stop offset="1" stop-color="#e6eaec" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect class="pad-field" x="0" y="0" width="240" height="150" rx="2"/>
+        <line class="pad-grid" x1="0" y1="75" x2="240" y2="75"/>
+        <line class="pad-grid" x1="120" y1="0" x2="120" y2="150"/>
+        <circle class="pad-mark" data-mark="meridian" r="4" cx="0" cy="0"/>
+        <circle class="pad-mark" data-mark="arc" r="4" cx="0" cy="0"/>
+        <circle class="pad-mark" data-mark="halo" r="4" cx="0" cy="0"/>
+        <circle class="pad-halo" id="pad-glow" r="16" cx="0" cy="0"/>
+        <circle id="pad-dot" r="3.5" cx="0" cy="0"/>
+        <text class="pad-text" x="0" y="168">left</text>
+        <text class="pad-text" x="240" y="168" text-anchor="end">behind</text>
+        <text class="pad-text" x="246" y="9">high</text>
+        <text class="pad-text" x="246" y="150">low</text>
+      </svg>
+    </div>
+    <div class="actions">
+      <button class="act" type="button" id="reset">Reset</button>
+      <button class="act" type="button" id="replay">Replay</button>
+      <button class="act" type="button" id="save">Save still</button>
+    </div>
+  </section>
+
+  <footer class="colophon">
+    <p>Everything in the image is computed in this page. The glass is reconstructed in code from its published dimensions and one product photograph, with hidden details inferred; the light on the surface is traced through its six facets, knop and foot, photon by photon.</p>
+    <p>Drag across the image to move the light; keys 1, 2 and 3 choose an arrangement, Esc skips the film. An independent study of an object; not affiliated with or endorsed by Baccarat. <span id="debug"></span></p>
+  </footer>
+</div>
+<!--SCRIPT-->
