@@ -661,16 +661,29 @@ vec3 floorIrradiance(vec2 xy);
 
 vec3 surfaceRadianceRGB(vec2 xy) { return uOptic.z / PI_F * floorIrradiance(xy); }
 
-// spectral radiance at lambda of whatever the ray reaches first, no crystal
-float leafRadiance(vec3 o, vec3 d, float lambdaNm) {
+// Glints. A camera path that leaves the crystal and meets the source carries the
+// source's own radiance, some 10^5 times that of the lit surface. Most of these
+// images of the source are far smaller than a pixel: a pixel's samples find them
+// only now and then, so they show as isolated saturated specks that flash on and
+// off as the light moves. Their throughput is capped at GLINT_MAX of the source's
+// radiance (one and a half times display white at the piece's fixed exposure): a
+// glint that covers most of a pixel still reads as white, sub-pixel ones fade.
+// This touches only the image of the crystal; the light on the surface is
+// computed separately and is not affected.
+const float GLINT_MAX = 2.3e-5;
+float glint(float w) { return min(w, GLINT_MAX) * uLightE.x; }
+
+// spectral radiance at lambda, times the path weight w, of whatever a path that
+// has left the crystal reaches first
+float leafRadiance(vec3 o, vec3 d, float lambdaNm, float w) {
   float tl = lightHit(o, d);
   float tf = (d.z < 0.0) ? -o.z / d.z : BIG_F;
-  if (tl < tf) return uLightE.x;
+  if (tl < tf) return glint(w);
   if (tf < BIG_F) {
     vec3 p = o + tf * d;
-    return rgbToSpectral(surfaceRadianceRGB(vec2(p.x, p.y)), lambdaNm);
+    return w * rgbToSpectral(surfaceRadianceRGB(vec2(p.x, p.y)), lambdaNm);
   }
-  return envRadiance(d);
+  return w * envRadiance(d);
 }
 
 vec3 leafRadianceRGB(vec3 o, vec3 d) {
@@ -727,12 +740,12 @@ vec3 traceCamera(vec3 ro, vec3 rd, float lambdaNm, uint seed) {
         alive = false;  // numerical leak; drop
         continue;
       }
-      L += w * leafRadiance(o, d, lambdaNm);
+      L += leafRadiance(o, d, lambdaNm, w);
       alive = false;
       continue;
     }
     if (!inGlass && lightHit(o, d) < t) {
-      L += w * uLightE.x;
+      L += glint(w);
       alive = false;
       continue;
     }
@@ -759,7 +772,7 @@ vec3 traceCamera(vec3 ro, vec3 rd, float lambdaNm, uint seed) {
     float wt = w * (1.0 - F);
     // transmitted branch out of the foot lands on the surface directly beneath it
     bool tLand = (sid == SID_BOTTOM && !entering);
-    // weak-branch roulette (keeps glints unbiased without exploding the tree)
+    // weak-branch roulette (unbiased; keeps the tree small)
     float thr = 0.02;
     if (wr < thr) {
       float u = rand2(seed, uint(iter) * 747796405u + 1u);

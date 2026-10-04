@@ -97,6 +97,15 @@ The camera traces a tree of reflections and refractions with Fresnel weights (we
 branches by Russian roulette), one wavelength per sample. Branches end on the light, on
 the surface (looking up the irradiance above), or in the room.
 
+A branch that reaches the source itself through the crystal is a glint: an image of a
+light some 10⁵ times brighter than the lit surface, usually far smaller than a pixel. At
+a few hundred samples per pixel such glints are found only now and then, and showed as
+isolated saturated specks that flashed on and off as the light moved. Their throughput is
+therefore capped at 2.3·10⁻⁵ of the source's radiance (one and a half times display white
+at the fixed exposure): a glint covering most of a pixel still reads as white, smaller ones
+fade. This is a deliberate bias in the image of the glass only; the light on the surface
+is computed separately and is not affected.
+
 Removing the glass removes all photon light: with the glass gone the surface shows only
 the smooth fall-off of the source (`out/checks/removal-*.png`).
 
@@ -157,6 +166,9 @@ From one fixed camera, three arrangements of the same glass:
 - Light that the lit surface sends back through the glass onto the surface again
   (surface → crystal → surface) is ignored; it is far below the direct caustics. The
   fill's own caustics are ignored.
+- Glints of the source seen in the crystal are capped (see above), so the glass sparkles
+  less than it would in a photograph, where the lens also spreads each glint into a
+  small halo. No lens glare is modelled.
 - No absorption, scattering or polarisation in the crystal.
 - Dispersion follows a two-term Cauchy model fitted to assumed n_d and Abbe number.
 - In the neutral product view the stem waists look faint: their opposite hexagonal faces
