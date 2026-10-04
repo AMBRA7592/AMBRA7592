@@ -67,7 +67,7 @@ function chooseResolution() {
   const cap = testArgs ? 640 : (debug ? 960 : 1600);
   const w = Math.max(480, Math.min(cap, Math.round(box.width * dpr)));
   W = w; H = Math.round(w / ASPECT);
-  if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+  if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; state.stable = 0; }
   R.resize(W, H);
 }
 
@@ -170,13 +170,20 @@ function loop(now) {
   state.lastNow = now;
   state.spf = Math.max(1, Math.min(8, (state.spf || 1) + (dt < 24 ? 1 : dt > 40 ? -1 : 0)));
   const decay = camMoved ? 0 : (R.moving ? 0.55 : (floorChanged ? 0.88 : 1));
-  for (let k = 0; k < state.spf; k++) R.camera(k === 0 ? decay : 1);
-  R.display();
+  // once the surface field and the image have converged, stop drawing until something changes
+  if (camMoved || R.moving || floorChanged) state.stable = 0;
+  const idle = state.stable >= 256;
+  if (!idle) {
+    for (let k = 0; k < state.spf; k++) R.camera(k === 0 ? decay : 1);
+    R.display();
+    state.stable = (state.stable || 0) + state.spf;
+  }
 
-  if (state.stillPending && !R.moving && R.progress() >= 0.999) saveStill();
+  if (state.stillPending && !R.moving && R.progress() >= 0.999 && state.stable >= 64) saveStill();
   if (debug) $('debug').textContent =
     `${state.mode} ${W}x${H} batches ${R.refine}/${R.maxBatches} vis ${R.fields.wide?.visSamples} spp ${R.frameSamples} floatBlend ${R.floatBlend} glass ${glassOn}`;
-  $('refine').style.transform = `scaleX(${(state.mode === 'compose' ? R.progress() : 0).toFixed(3)})`;
+  const prog = Math.min(R.progress(), Math.min(1, (state.stable || 0) / 256));
+  $('refine').style.transform = `scaleX(${(state.mode === 'compose' ? prog : 0).toFixed(3)})`;
 }
 
 // ---------------------------------------------------------------------------------
@@ -260,6 +267,7 @@ function bindControls() {
   });
   window.addEventListener('keydown', (e) => {
     if (e.target && (e.target.tagName === 'INPUT' || e.target === pad)) return;
+    if (state.mode === 'film' && e.key === 'Escape') { enterCompose(true); return; }
     if (state.mode !== 'compose') return;
     const idx = { 1: 0, 2: 1, 3: 2 }[e.key];
     if (idx !== undefined) document.querySelectorAll('[data-preset]')[idx].click();

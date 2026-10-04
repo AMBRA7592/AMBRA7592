@@ -33,6 +33,11 @@ const write = (file, lines) => { fs.writeFileSync(file, lines.join('\n') + '\n')
 if (set === 'presets') {
   for (const p of PRESETS) write(path.join(outDir, `${p.id}.cfg`), finalJob(`still-${p.id}`, p.light));
 }
+if (set === 'compare') {
+  // the film renderer at the browser check's size, for the browser-versus-film comparison
+  const arc = PRESETS.find((p) => p.id === 'arc').light;
+  write(path.join(outDir, 'compare.cfg'), finalJob('film-renderer-640', arc, { W: 640, H: 360, photons: 60e6, spp: [8, 128] }));
+}
 if (set === 'removal') {
   const arc = PRESETS.find((p) => p.id === 'arc').light;
   write(path.join(outDir, 'removal-with.cfg'), finalJob('removal-with-glass', arc, { W: 1280, H: 720, photons: 60e6, spp: [4, 64] }));
@@ -65,6 +70,17 @@ if (set === 'transition') {
     L.push(`frame ${f}`, `uLight ${fmt(u.uLight)}`, `uLightE ${fmt(u.uLightE)}`);
   }
   write(path.join(outDir, 'transition.cfg'), L);
+}
+if (set === 'clay') {
+  // opaque view of the crystal surfaces (debug shading) at the product-view framing
+  const dist = 1900, el = 6 * Math.PI / 180, zc = 65.3;
+  const cam = { pos: [0, -dist * Math.cos(el), zc + dist * Math.sin(el)], target: [0, 0, zc],
+    fov: 2 * Math.atan(110 / dist) * 180 / Math.PI };
+  const u = makeUniforms({ glass, light: { pos: lightPosition({ az: -120, el: 60, dist: 600 }), radius: 30 } });
+  const L = jobLines(u, { camera: cam, width: 1200, height: 1200, spp: [1, 1], photons: 0,
+    cmap: [-60, -60, 60, 60, 1], dmap: [-60, -60, 60, 60, 1], exposure: 1 });
+  L.push('clay 1', `out ${path.join(outDir, 'geometry-clay')}`);
+  write(path.join(outDir, 'clay.cfg'), L);
 }
 if (set === 'product') {
   // neutral product view: studio-like surround, long lens, eye slightly above the rim

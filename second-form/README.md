@@ -17,7 +17,7 @@ Not affiliated with or endorsed by Baccarat.
 | `out/stills/still-arc.png` | The held arrangement (the decisive frame). |
 | `out/stills/still-meridian.png`, `still-halo.png` | The two other arrangements, same glass, same camera. |
 | `out/stills/product-view.png` | Neutral product view used to check the reconstruction. |
-| `out/checks/` | Verification renders: glass removed, convergence, light transition, browser-versus-film comparison, geometry overlay. |
+| `out/checks/` | Verification renders: glass removed, convergence, a fixed-camera light transition, browser versus film renderer, and an opaque view of the geometry. |
 | `NOTES.md` | Reference, method, assumptions and known limitations. |
 | `reference/measurements.md` | What was measured from the photograph and the published data. |
 
@@ -59,11 +59,24 @@ python3 tools/encode.py build/frames out/film
 node tools/film.mjs build/preview.cfg build/preview --preview --step 4
 ./native/render build/preview.cfg
 
-# stills and checks
-node tools/stills.mjs out/stills presets && for f in out/stills/{meridian,arc,halo}.cfg; do ./native/render $f; done
+# stills (about 4 minutes each)
+node tools/stills.mjs out/stills presets
+for f in meridian arc halo; do ./native/render out/stills/$f.cfg; done
 node tools/stills.mjs out/stills product && ./native/render out/stills/product.cfg
+python3 tools/png.py out/stills/*.ppm
+
+# verification renders
 node tools/stills.mjs out/checks removal && ./native/render out/checks/removal-with.cfg && ./native/render out/checks/removal-without.cfg
+node tools/stills.mjs out/checks convergence && for f in out/checks/conv-*.cfg; do ./native/render $f; done
+node tools/stills.mjs out/checks transition && ./native/render out/checks/transition.cfg
+node tools/stills.mjs out/checks clay && ./native/render out/checks/clay.cfg
+python3 tools/checks.py out/checks
 ```
 
-Frames are 16-bit PPM (and PFM for HDR when requested). The render is deterministic:
-the same job file reproduces the same frames.
+Frames are 16-bit PPM (and PFM for HDR when requested); `python3 tools/png.py *.ppm`
+writes 8-bit PNGs. The render is deterministic: the same job file reproduces the same
+frames. `python3 tools/checks.py out/checks` assembles the verification sheets.
+
+Two diagnostic job options exist for inspection only: `clay 1` shades the crystal's
+surfaces opaque (geometry check), and `audit N` traces N photons and reports where their
+energy goes (surface, upward, trapped, numerical loss).

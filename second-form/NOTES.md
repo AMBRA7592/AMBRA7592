@@ -42,8 +42,11 @@ Checks against the published data (computed by `analyse()`):
 | Mass at 3.00–3.05 g/cm³ | 346–352 g | 0.34 kg |
 | Thinnest wall | 2.07 mm (below the arches) | — |
 
-A matched-framing render overlaid on the photograph's edges (`out/checks/geometry-overlay.png`)
-confirms the outline of bowl, knop tiers and foot.
+During development a matched-framing render was overlaid on the photograph's edges to
+check the outline of bowl, knop tiers and foot; that overlay is derived from the
+photograph and is not included. `out/checks/geometry-clay.png` shows the same crystal
+surfaces rendered opaque, so the facet layout, arches, knop tiers and foot can be read
+directly.
 
 ## Assumed optical properties
 

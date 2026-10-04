@@ -51,8 +51,12 @@ for (let f = from; f < to; f += step) {
   } else {
     const n = s.phase === 'hold' ? Q.hold : Q.travel;
     fl.push(`cmap ${fmt([...WIDE, Q.cTex])}`, `dmap ${fmt([...WIDE, Q.dTex])}`, `photons ${fmt([n, 800, 0.06, 4, 0])}`);
-    // the held frame is rendered once at higher quality (identical frames are reused)
-    if (s.phase === 'hold') fl.push(`spp ${Q.holdSpp[0]} ${Q.holdSpp[1]}`, 'hdr 1');
+    // the held frame is rendered once at higher quality (identical frames are reused);
+    // its first frame also keeps an HDR copy
+    if (s.phase === 'hold') {
+      fl.push(`spp ${Q.holdSpp[0]} ${Q.holdSpp[1]}`);
+      if (filmState((f - 1) / FPS).phase !== 'hold') fl.push('hdr 1');
+    }
   }
   lines.push(...fl);
 }
