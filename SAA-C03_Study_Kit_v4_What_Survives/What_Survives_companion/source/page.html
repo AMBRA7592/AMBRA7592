@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="AWS — What Survives: three visual studies of state, failure and recovery. An optional companion to the SAA-C03 One-Guide Study Kit, Revision 4. Works offline.">
+<title>AWS — What Survives</title>
+<style>
+/*__STYLES__*/
+</style>
+</head>
+<body>
+<a class="skip-link" href="#run-view">Skip to the current study</a>
+<header class="masthead">
+  <div class="mast-titles">
+    <h1 id="app-title">AWS — What Survives</h1>
+    <p id="app-subtitle" class="subtitle">Three visual studies of state, failure and recovery.</p>
+  </div>
+  <div class="mast-tools" role="toolbar" aria-label="View options">
+    <button type="button" id="btn-text" class="btn btn-quiet" aria-pressed="false" title="Readable step mode (T)">Text view</button>
+    <button type="button" id="btn-motion" class="btn btn-quiet" aria-pressed="false" title="Reduce motion (M)">Reduce motion</button>
+    <button type="button" id="btn-print" class="btn btn-quiet" title="Print the key states of all three studies">Print key states</button>
+    <button type="button" id="btn-help" class="btn btn-quiet" title="Keyboard shortcuts (?)">Keys</button>
+  </div>
+  <nav class="study-nav" aria-label="Studies">
+    <div role="tablist" aria-label="Choose a study" class="study-tabs">
+      <button type="button" role="tab" class="study-tab" data-study="photo" aria-controls="run-view"><span class="tab-num">1</span><span class="tab-body"><span class="tab-title"></span><span class="tab-route"></span></span></button>
+      <button type="button" role="tab" class="study-tab" data-study="database" aria-controls="run-view"><span class="tab-num">2</span><span class="tab-body"><span class="tab-title"></span><span class="tab-route"></span></span></button>
+      <button type="button" role="tab" class="study-tab" data-study="payment" aria-controls="run-view"><span class="tab-num">3</span><span class="tab-body"><span class="tab-title"></span><span class="tab-route"></span></span></button>
+    </div>
+    <button type="button" id="tab-sources" class="btn btn-quiet sources-btn" aria-pressed="false">Sources &amp; assumptions</button>
+  </nav>
+</header>
+
+<main id="main">
+  <details class="about">
+    <summary>About this companion <span class="about-flag">optional · not part of the frozen v4 study route · pilot learners: record its use</span></summary>
+    <div id="about-text"></div>
+    <p class="pilot" id="pilot-text"></p>
+  </details>
+
+  <section id="study-head" class="study-head" aria-labelledby="study-title">
+    <h2><span class="study-number" id="study-number"></span> <span id="study-title"></span></h2>
+    <p class="study-lede" id="study-lede"></p>
+    <p class="study-meta"><span id="study-route" class="route"></span> <span id="study-guide" class="guide-links"></span></p>
+    <p id="deployment-note" class="deployment" hidden></p>
+    <details class="terms">
+      <summary>Terms used in this study</summary>
+      <dl id="study-terms"></dl>
+    </details>
+  </section>
+
+  <ol id="stage-rail" class="stage-rail" aria-label="Learning sequence"></ol>
+  <div id="guide-bar" class="guide-bar"></div>
+
+  <section id="run-view" class="run-view" tabindex="-1" aria-label="Replay">
+    <div class="stage-grid">
+      <figure class="drawing">
+        <div class="drawing-meta">
+          <span class="clock"><span class="clock-label">Clock</span> <span id="drawing-clock" class="clock-time"></span> <span class="clock-note">illustrative</span></span>
+          <span class="design"><span class="design-label">Design</span> <span id="drawing-design"></span></span>
+        </div>
+        <div id="drawing-wrap" class="drawing-wrap" tabindex="0" aria-label="Architecture drawing. Use the arrow keys to step through events.">
+          <svg id="drawing" role="img" aria-label="Architecture drawing"></svg>
+        </div>
+        <div id="text-view" class="text-view" hidden></div>
+        <figcaption class="legend" aria-label="Legend">
+          <span class="lg"><svg viewBox="0 0 34 16" aria-hidden="true"><rect x="1" y="1" width="32" height="14" rx="3" class="lg-comp"/><circle cx="8" cy="8" r="3" class="lg-ok"/></svg>Live component</span>
+          <span class="lg"><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M2,2 H26 L32,8 V14 H2 Z" class="lg-rec"/><path d="M26,2 V8 H32" class="lg-rec"/></svg>Stored record</span>
+          <span class="lg"><svg viewBox="0 0 34 16" aria-hidden="true"><line x1="2" y1="8" x2="26" y2="8" class="lg-req"/><path d="M24,3 L32,8 L24,13 z" class="lg-req-head"/></svg>Request</span>
+          <span class="lg"><svg viewBox="0 0 34 16" aria-hidden="true"><line x1="2" y1="6" x2="26" y2="6" class="lg-repl"/><line x1="2" y1="10" x2="26" y2="10" class="lg-repl"/><path d="M24,3 L32,8 L24,13 z" class="lg-repl-head"/></svg>Replication</span>
+          <span class="lg"><svg viewBox="0 0 34 16" aria-hidden="true"><line x1="32" y1="8" x2="9" y2="8" class="lg-ack"/><path d="M10,3.5 L2.5,8 L10,12.5 z" class="lg-ack-head"/></svg>Acknowledgement</span>
+          <span class="lg"><svg viewBox="0 0 34 16" aria-hidden="true"><line x1="2" y1="8" x2="32" y2="8" class="lg-blocked"/><circle cx="17" cy="8" r="5.5" class="lg-cross-c"/><path d="M14.5,5.5 L19.5,10.5 M19.5,5.5 L14.5,10.5" class="lg-cross"/></svg>Unavailable path</span>
+          <span class="lg"><svg viewBox="0 0 34 16" aria-hidden="true"><rect x="1" y="1" width="32" height="14" rx="3" class="lg-eff"/><rect x="3" y="3" width="28" height="10" rx="2" class="lg-eff-in"/><path d="M7,8 L10,11 L16,5" class="lg-eff-check"/></svg>Completed business effect</span>
+          <span class="lg"><svg viewBox="0 0 34 16" aria-hidden="true"><rect x="6" y="1" width="27" height="12" rx="2" class="lg-hist-back"/><rect x="2" y="3" width="27" height="12" rx="2" class="lg-hist"/></svg>Retained historical copy</span>
+        </figcaption>
+      </figure>
+
+      <aside class="event-panel" aria-label="Event explanation">
+        <div id="predict-card" class="predict-card" role="region" aria-label="Prediction" hidden></div>
+        <div id="event-card" class="event-card" aria-live="polite"></div>
+        <div id="note-card" class="note-card" hidden></div>
+        <section class="pause-check" aria-labelledby="pause-title">
+          <div class="pause-head">
+            <h3 id="pause-title">Pause check</h3>
+            <button type="button" id="btn-answers" class="btn btn-quiet btn-small" aria-expanded="false" aria-controls="pause-list">Show answers</button>
+          </div>
+          <dl id="pause-list" class="pause-list"></dl>
+        </section>
+      </aside>
+    </div>
+
+    <div class="control-bar" role="group" aria-label="Playback">
+      <button type="button" id="btn-prev" class="btn" aria-label="Previous event"><span aria-hidden="true">◂</span><span class="btn-text">Previous</span></button>
+      <button type="button" id="btn-play" class="btn" aria-pressed="false" aria-label="Play"><span class="btn-icon" aria-hidden="true">▶</span><span class="btn-text">Play</span></button>
+      <button type="button" id="btn-primary" class="btn btn-primary">Next event ▸</button>
+      <button type="button" id="btn-reset" class="btn btn-quiet" aria-label="Reset this study"><span aria-hidden="true">⟲</span><span class="btn-text">Reset study</span></button>
+      <span id="frame-pos" class="frame-pos" aria-hidden="true"></span>
+    </div>
+
+    <div class="lower-grid">
+      <section class="timeline-wrap" aria-label="Event timeline">
+        <h3 class="mini-head">Event timeline</h3>
+        <ol id="timeline" class="timeline"></ol>
+      </section>
+      <section class="decisions-wrap" aria-label="Design decisions">
+        <h3 class="mini-head">Change one decision</h3>
+        <p class="decisions-hint">Changing a decision rewinds to the earliest event it affects. The workload and incident schedule stay the same.</p>
+        <div id="decisions" class="decisions"></div>
+      </section>
+    </div>
+  </section>
+
+  <section id="compare-view" class="compare-view" aria-labelledby="compare-title" hidden>
+    <div class="compare-top">
+      <h3 id="compare-title" class="mini-head">Compare equivalent events</h3>
+      <p id="compare-intro" class="compare-intro"></p>
+      <ol id="compare-events" class="compare-events" aria-label="Equivalent events"></ol>
+    </div>
+    <div class="compare-grid" id="compare-grid">
+      <div id="cmp-a" class="cmp-side"></div>
+      <div id="cmp-b" class="cmp-side"></div>
+    </div>
+    <div class="control-bar compare-bar">
+      <button type="button" id="btn-back-run" class="btn">◂ Back to the replay</button>
+      <button type="button" id="btn-compare-next" class="btn btn-primary">Continue ▸</button>
+    </div>
+  </section>
+
+  <section id="transfer-view" class="transfer-view" aria-labelledby="transfer-title" hidden>
+    <h3 id="transfer-title">Transfer — a fresh situation</h3>
+    <p class="transfer-hint">Untimed. Answer in your head or on paper, then open the explanation.</p>
+    <p id="transfer-q" class="transfer-q"></p>
+    <details id="transfer-details" class="transfer-details">
+      <summary>Show the explanation</summary>
+      <div id="transfer-a"></div>
+      <p class="transfer-guide">Revisit in the guide: <span id="transfer-links" class="guide-links"></span></p>
+    </details>
+    <div class="control-bar">
+      <button type="button" id="btn-transfer-back" class="btn">◂ Back to the comparison</button>
+      <button type="button" id="btn-transfer-next" class="btn btn-primary">Next study ▸</button>
+    </div>
+  </section>
+
+  <section id="sources-view" class="sources-view" tabindex="-1" aria-labelledby="sources-title" hidden>
+    <h2 id="sources-title">Sources, assumptions and boundaries</h2>
+    <div id="sources-body"></div>
+    <div class="control-bar">
+      <button type="button" id="btn-sources-back" class="btn">◂ Back to the studies</button>
+    </div>
+  </section>
+</main>
+
+<dialog id="help" class="help" aria-labelledby="help-title">
+  <h2 id="help-title">Keyboard</h2>
+  <dl class="keys">
+    <dt><kbd>→</kbd> or <kbd>N</kbd></dt><dd>Next event, reveal, or continue</dd>
+    <dt><kbd>←</kbd> or <kbd>P</kbd></dt><dd>Previous event</dd>
+    <dt><kbd>K</kbd> (or <kbd>Space</kbd> on the drawing)</dt><dd>Play or pause</dd>
+    <dt><kbd>Home</kbd> / <kbd>End</kbd></dt><dd>First / last event of this run</dd>
+    <dt><kbd>R</kbd></dt><dd>Reset the current study</dd>
+    <dt><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></dt><dd>Switch study</dd>
+    <dt><kbd>C</kbd></dt><dd>Compare with the previous design (after changing a decision)</dd>
+    <dt><kbd>A</kbd></dt><dd>Show or hide pause-check answers</dd>
+    <dt><kbd>T</kbd> / <kbd>M</kbd></dt><dd>Text view / reduce motion</dd>
+  </dl>
+  <p>Every control is also reachable with <kbd>Tab</kbd>. Play stops at every prediction.</p>
+  <button type="button" id="help-close" class="btn btn-primary">Close</button>
+</dialog>
+
+<div id="live" class="visually-hidden" aria-live="polite"></div>
+<div id="print-pack" class="print-pack" aria-hidden="true"></div>
+<noscript><p class="noscript">This companion needs JavaScript to run its replays. The guide itself works without it.</p></noscript>
+
+<script id="ws-model">
+//__MODEL__
+</script>
+<script id="ws-teaching">
+//__TEACHING__
+</script>
+<script id="ws-view">
+//__VIEW__
+</script>
+<script id="ws-app">
+//__APP__
+</script>
+</body>
+</html>

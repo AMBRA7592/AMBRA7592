@@ -1,0 +1,52 @@
+{
+  "title": "AWS Solutions Architect Associate: The One-Guide Study Kit",
+  "audience": "Candidate / human beginner learner",
+  "exam": "SAA-C03",
+  "guideEdition": "Revision 4, 6 October 2026",
+  "guideFactCheckWindow": [
+    "2026-10-05",
+    "2026-10-06"
+  ],
+  "packagedAtUtc": "2026-10-06T21:00:15+00:00",
+  "startHere": "START_HERE.txt",
+  "reader": "SAA-C03_Beginner_Guide_2026-10-06_v4.html",
+  "markdownAlternative": "SAA-C03_Beginner_Guide_2026-10-06_v4.md",
+  "learnerLog": "MY_STUDY_LOG.txt",
+  "guideIdentity": "Both guide files are byte-for-byte copies of the frozen Revision 4 release.",
+  "guideContents": {
+    "workedScenarios": 56,
+    "diagrams": 4,
+    "writtenArchitectureExercises": 12,
+    "originalQuestions": 65,
+    "timedSittingMinutes": 130
+  },
+  "files": [
+    {
+      "file": "START_HERE.txt",
+      "bytes": 3999,
+      "sha256": "c5cdcfde1f5e23f89e576091e2b133b92a6d793bb80b2fc0f1ca3adbddb5e384"
+    },
+    {
+      "file": "SAA-C03_Beginner_Guide_2026-10-06_v4.html",
+      "bytes": 663481,
+      "sha256": "ffeae6efda44609bc3c3688cb966afaf8a2e7ca7e73f6f6612f49cfb49219733"
+    },
+    {
+      "file": "SAA-C03_Beginner_Guide_2026-10-06_v4.md",
+      "bytes": 453122,
+      "sha256": "d75e858e3789cc1e68bdea626da3d65abd80ebb42351f31aa3d62bf97058782a"
+    },
+    {
+      "file": "MY_STUDY_LOG.txt",
+      "bytes": 2969,
+      "sha256": "acb6b32d3edf7f2630f257dabc5882f2ba5bf0a9e0168b81fdfbe24d1407048f"
+    }
+  ],
+  "externalPracticeExams": "Optional and not included. Legitimate answer explanations are permitted.",
+  "evidenceStatus": "Editorial and functional checks passed. Human pilot not conducted; beginner effectiveness, preparation time and a pass prediction have not been established.",
+  "originalReviewPackage": {
+    "file": "SAA-C03_v4_Review_Package.zip",
+    "sha256": "c28995d1ba311d2ba8278bb1e08f2ab999abef065c53a473064857993d79bc4a"
+  },
+  "scope": "Candidate handoff notes and a blank study-log template are accompanying material, not additional assigned teaching."
+}

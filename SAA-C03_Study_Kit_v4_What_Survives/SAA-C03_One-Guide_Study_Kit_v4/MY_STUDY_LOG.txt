@@ -1,0 +1,94 @@
+MY STUDY LOG — SAA-C03 One-Guide Study Kit
+Guide edition: Revision 4, 6 October 2026
+
+This is a blank, editable template. Save your own copy. Duplicate the entries
+below as needed. Approximate timings are acceptable; mark them as approximate.
+For a pilot, use the same guide edition throughout and follow Appendix E.1.
+
+STARTING POINT
+
+Learner ID or name:
+Study start date:
+Prior AWS study or experience:
+General IT, networking or architecture background:
+Intended exam date, if known:
+
+STUDY SESSION — duplicate for each session
+
+Date:
+Focused study time:
+Guide sections or exercises studied:
+What I can now explain or draw without the guide:
+Checkpoint still difficult:
+Next section or concept to revisit:
+Outside help used, if any:
+
+INTERNAL MOCK — record the first attempt separately from any retake
+
+Date:
+First attempt or retake:
+Timed, closed book? Record any departures:
+Time limit: 130 minutes
+Elapsed time:
+Questions answered:
+Raw score out of 65:
+Questions I guessed, even if correct:
+Question timing notes:
+Main requirements or concepts I missed:
+
+This raw score is uncalibrated and does not convert to an AWS scaled score.
+
+EXTERNAL PRACTICE EXAM — duplicate for each form or attempt
+
+Provider and exam/form identifier:
+Date:
+Previously unseen, with no preview? If not, explain:
+First attempt or retake:
+Full length and closed book? Record any departures:
+Score exactly as reported, including its scale:
+Time limit:
+Elapsed time:
+Per-question timings or timing notes:
+Guessed answers and missed qualifiers, in my own words:
+New concepts learned from the explanations:
+
+Keep first-attempt results separate from retakes or remembered questions.
+Do not copy provider questions or restricted exam material into this log.
+
+MISTAKE OR UNCERTAIN ANSWER — duplicate for each entry
+
+Date and question/exercise reference:
+Requirement I missed:
+Mistaken assumption:
+Correct mechanism, in my own words:
+What change would make my original answer valid:
+Guide section to revisit:
+How I checked my understanding on a fresh example:
+
+CONCEPT NEEDING OUTSIDE HELP — duplicate for each entry
+
+Date:
+Concept, in my own words:
+Help source used:
+Classification: absent / unclear / forgotten / misapplied
+Guide section that should teach it:
+Blueprint item, if known:
+Was the original question answered correctly?:
+What I learned from the outside help:
+Suggested clarification or missing explanation:
+
+Record an absent concept as a guide gap even if the answer was correct.
+Distinguish content missing from the guide from content I forgot or misapplied.
+
+END-OF-STUDY FEEDBACK
+
+Study end date:
+Total focused study hours:
+Elapsed preparation days:
+External practice exam results, with form identifiers:
+Any actual certification result, if later available, exactly as reported:
+Guide sections that were most helpful:
+Missing or unclear concepts:
+Additional course, lab or other resources needed, if any:
+Other departures from the planned route:
+Suggested improvements:

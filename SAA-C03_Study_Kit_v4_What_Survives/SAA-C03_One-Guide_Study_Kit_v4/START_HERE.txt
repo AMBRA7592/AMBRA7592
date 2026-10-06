@@ -1,0 +1,87 @@
+AWS Solutions Architect Associate: The One-Guide Study Kit
+Candidate handoff — Revision 4 — 6 October 2026
+
+Learn AWS architecture from the ground up, through one structured resource.
+
+1. OPEN THE GUIDE
+
+Extract this ZIP first. Then open this file in your web browser:
+    SAA-C03_Beginner_Guide_2026-10-06_v4.html
+
+The saved HTML contains the complete guide, diagrams, questions, explanations
+and timed practice controls. It works offline; you do not need a preview server,
+AWS account, sandbox, lab or additional course for this study route.
+
+The .md file is the same guide in Markdown, provided as an alternative format.
+Use the HTML reader for the simplest experience. In a plain-text editor, the
+Markdown answer key shows some formatting markup.
+
+2. FOLLOW THE LEARNING ORDER
+
+Start with section 0, the learning plan. Follow its reading order rather than
+reading every chapter from front to back. Your first study session covers:
+    Section 1 — Foundations and scenario reasoning
+    Section 6.1 — EC2 instance basics
+    Section 7.1 — Storage foundations
+
+Read a small topic, close the guide, and explain the idea in your own words.
+Draw the request flow, work through the example, then change one requirement
+and explain how that changes the design.
+
+The ten-day plan is an intensive suggested sequence. Extend it whenever a
+checkpoint is still difficult; ten days is not a minimum or a completion promise.
+
+3. USE THE INCLUDED PRACTICE
+
+The guide includes 56 worked scenarios, four architecture diagrams, 12 written
+architecture exercises and 65 original scenario questions.
+
+When the learning plan reaches Appendix C, take its first sitting closed book
+for 130 minutes. Keep Appendix D's answers and explanations closed until you
+finish. Record guesses as well as incorrect answers, then review the reasoning
+for every choice you misunderstood. Use Appendix E's written exercises to check
+whether you can apply a concept when the requirements change.
+
+The internal score is an uncalibrated learning score. It does not convert to
+AWS's scaled exam score or predict a pass.
+
+4. KEEP A STUDY RECORD
+
+MY_STUDY_LOG.txt is an editable blank template. Save your own copy and duplicate
+its entries as needed. Record study time, uncertain concepts, mistakes, and any
+outside help. There is no automatic submission or study-log collection.
+
+Legitimate online practice exams and their answer explanations are permitted
+but are not supplied in this package. If you use them, keep first-attempt scores
+separate from retakes. A concept newly taught by an external explanation should
+be recorded as a guide gap, even when your answer was correct.
+
+The guide suggests aiming for 80% on two different, previously unseen full-length
+practice exams as a personal readiness checkpoint. That is not AWS's raw passing
+threshold or a validated pass predictor.
+
+5. BEFORE BOOKING
+
+Check AWS's Associate certification page and the exam guide linked from it:
+    https://aws.amazon.com/certification/certified-solutions-architect-associate/
+
+This kit targets SAA-C03. Confirm that the version you intend to sit still
+matches it. The guide's source links are for fact checking, not additional
+assigned study.
+
+IF YOU ARE TAKING PART IN THE PILOT
+
+Follow Appendix E.1. Keep this edition unchanged during the pilot. Record your
+starting experience, preparation time, unseen-exam results and concepts needing
+outside help. Report difficulty, unsuccessful attempts and changes to the study
+route as well as successful outcomes. Your coordinator will collect feedback.
+
+STATUS
+
+This is an independent preparation package, not an AWS-endorsed product.
+It has passed editorial and functional checks and is ready for human learner
+testing. Beginner outcomes and required preparation time have not yet been
+established. The guide has been preserved unchanged from the frozen v4 edition.
+
+EDITION.json identifies the guide files and their hashes for version tracking.
+It is a reference record, not required reading.

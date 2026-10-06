@@ -1,0 +1,168 @@
+{
+  "title": "AWS — What Survives",
+  "subtitle": "Three visual studies of state, failure and recovery.",
+  "companionVersion": "1.0",
+  "entryPoint": "What_Survives_companion/AWS_What_Survives.html",
+  "companionTo": {
+    "title": "AWS Solutions Architect Associate: The One-Guide Study Kit",
+    "guideEdition": "Revision 4, 6 October 2026",
+    "editionRecord": "SAA-C03_One-Guide_Study_Kit_v4/EDITION.json",
+    "editionRecordSha256": "3234c5796056a9b34f8bca19a4ab73287d1f72d945a4c02a717f1459cbdd23ec",
+    "guideFilesUnchanged": true
+  },
+  "routePlacement": [
+    {
+      "study": 1,
+      "title": "The missing photograph",
+      "after": "Day 4",
+      "guideAnchors": [
+        "w1",
+        "s6-3",
+        "s7-1",
+        "s7-5"
+      ]
+    },
+    {
+      "study": 2,
+      "title": "The perfectly replicated mistake",
+      "after": "Day 6",
+      "guideAnchors": [
+        "s8-2",
+        "s11-1"
+      ]
+    },
+    {
+      "study": 3,
+      "title": "The second payment",
+      "after": "Day 7",
+      "guideAnchors": [
+        "s9-2",
+        "w21"
+      ]
+    }
+  ],
+  "teachingCondition": "Optional companion, not part of the frozen v4 study route. In the beginner pilot its use is an additional teaching condition: record it and do not attribute results from the extended route to the original guide alone.",
+  "evidenceStatus": "Model, package and browser checks pass. No learner has used the companion; learning effectiveness and timings are not established.",
+  "verification": {
+    "checkedOn": "2026-10-06",
+    "method": "Claims checked against the AWS pages in SOURCE_MAP.md, read through a web-search index because the build environment blocked direct requests to docs.aws.amazon.com and aws.amazon.com."
+  },
+  "requirements": "A current web browser with JavaScript. No installation, AWS account or network connection.",
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 4398,
+      "sha256": "2ce335f6fe94073161c16c2bddb6a563c87cbe06048c2d5443f000a60d5a4850"
+    },
+    {
+      "file": "SAA-C03_One-Guide_Study_Kit_v4/EDITION.json",
+      "bytes": 2021,
+      "sha256": "3234c5796056a9b34f8bca19a4ab73287d1f72d945a4c02a717f1459cbdd23ec"
+    },
+    {
+      "file": "SAA-C03_One-Guide_Study_Kit_v4/MY_STUDY_LOG.txt",
+      "bytes": 2969,
+      "sha256": "acb6b32d3edf7f2630f257dabc5882f2ba5bf0a9e0168b81fdfbe24d1407048f"
+    },
+    {
+      "file": "SAA-C03_One-Guide_Study_Kit_v4/SAA-C03_Beginner_Guide_2026-10-06_v4.html",
+      "bytes": 663481,
+      "sha256": "ffeae6efda44609bc3c3688cb966afaf8a2e7ca7e73f6f6612f49cfb49219733"
+    },
+    {
+      "file": "SAA-C03_One-Guide_Study_Kit_v4/SAA-C03_Beginner_Guide_2026-10-06_v4.md",
+      "bytes": 453122,
+      "sha256": "d75e858e3789cc1e68bdea626da3d65abd80ebb42351f31aa3d62bf97058782a"
+    },
+    {
+      "file": "SAA-C03_One-Guide_Study_Kit_v4/START_HERE.txt",
+      "bytes": 3999,
+      "sha256": "c5cdcfde1f5e23f89e576091e2b133b92a6d793bb80b2fc0f1ca3adbddb5e384"
+    },
+    {
+      "file": "What_Survives_companion/AWS_What_Survives.html",
+      "bytes": 252141,
+      "sha256": "579f3fddc2b90110fc34644e370b6713385b3359f3b28a3dfc4222e95deee7a8"
+    },
+    {
+      "file": "What_Survives_companion/GUIDE_NOTES.md",
+      "bytes": 4789,
+      "sha256": "ebbd5eaa9a8e375f3dccaf1198c51affdf728709078ad104e8079c1e761c19d4"
+    },
+    {
+      "file": "What_Survives_companion/SOURCE_MAP.md",
+      "bytes": 12382,
+      "sha256": "296319c3e28fefc5a8f1ac654ef1fb7b1a0b9a4fbdc2742044a5291d621b8abc"
+    },
+    {
+      "file": "What_Survives_companion/checks/browser-checks.mjs",
+      "bytes": 17521,
+      "sha256": "06c02758e5d97b8c1d91efed5336cfe50f28a9fa2140c7a8421512cde3dcc712"
+    },
+    {
+      "file": "What_Survives_companion/checks/model-checks.mjs",
+      "bytes": 24874,
+      "sha256": "19dab28725a15ffaf57c90ae5b840fbdb362e0760e1fd7a1dc3fa0047c32dcbb"
+    },
+    {
+      "file": "What_Survives_companion/checks/package-checks.mjs",
+      "bytes": 4542,
+      "sha256": "36c53d5f20d748524f90ecbcad757b82f5992de229791b6c5933bc4f3f7fe1ef"
+    },
+    {
+      "file": "What_Survives_companion/screenshots/study-1-not-reachable-is-not-destroyed.png",
+      "bytes": 249190,
+      "sha256": "ae2b367b9ecd1a8ca174037729184505b87813b389072a1ac59578ba9edf9455"
+    },
+    {
+      "file": "What_Survives_companion/screenshots/study-2-restored-earlier-state.png",
+      "bytes": 329783,
+      "sha256": "faf6648887cb34b744656094124698352b85de7e94d5057f9ff9caf492bcff8b"
+    },
+    {
+      "file": "What_Survives_companion/screenshots/study-3-second-charge.png",
+      "bytes": 261559,
+      "sha256": "ad60aee69652df3a0e56ad109cbcf5fc4350b028d7b6ad49dce33a3e11a14deb"
+    },
+    {
+      "file": "What_Survives_companion/source/app.js",
+      "bytes": 41421,
+      "sha256": "3c5efb6decb01526366c4dd25b59d208d707d042067c6092fc5d27ffe971b46d"
+    },
+    {
+      "file": "What_Survives_companion/source/build.mjs",
+      "bytes": 3526,
+      "sha256": "254b49a0423b734dd40496edeeab2f6fd5c186aed19ee5c91d78b4edfee002d0"
+    },
+    {
+      "file": "What_Survives_companion/source/model.js",
+      "bytes": 67507,
+      "sha256": "076dee737e89a0022570fae94275d8285a9b687d01c70f00a1067ff1b57dd0bb"
+    },
+    {
+      "file": "What_Survives_companion/source/package.mjs",
+      "bytes": 6471,
+      "sha256": "1a297aeceac2daa33eedd4b105605e4171859e286cb48559f621112a9606788f"
+    },
+    {
+      "file": "What_Survives_companion/source/page.html",
+      "bytes": 11457,
+      "sha256": "84b91e13f9a199c401d1699760d92cadbccdef878ce78963867c016d4ae6a642"
+    },
+    {
+      "file": "What_Survives_companion/source/styles.css",
+      "bytes": 30598,
+      "sha256": "0ef2b34856448eb2285a683a708d9f82527d2bab181b906e5f76cb3a7092c8de"
+    },
+    {
+      "file": "What_Survives_companion/source/teaching.js",
+      "bytes": 36499,
+      "sha256": "7542a1ec3b5839952488de69df28926d5ab71cc9793878510bf30d9cad87b162"
+    },
+    {
+      "file": "What_Survives_companion/source/view.js",
+      "bytes": 64722,
+      "sha256": "c3993d8cc1282ef0a43aa7fa9bc1aba3d087e8319de0ca363d207ae2fba0d581"
+    }
+  ]
+}
